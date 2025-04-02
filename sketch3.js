@@ -1,4 +1,4 @@
-let currentScreen = "splash";
+let currentScreen = "between_2_and_3";
 //Options: splash, intro, level_1, between_1_and_2, level_2, between_2_and_3, level_3, after_3, death, after_death
 
 //Splash Screen
@@ -19,8 +19,8 @@ let player = { x: 450, y: 275 };
 // 6: Octopus (only appears when objects are collected - ONLY IN THE DREAM WORLD)
 let OGMap = [
   [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-  [2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [2, 2, 2, 2, 2, 1, 2, 2, 1, 1, 1, 1, 1, 2, 2, 6, 4, 3, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
+  [2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  [2, 2, 2, 2, 2, 1, 2, 2, 1, 1, 1, 1, 1, 2, 2, 6, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
   [2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
   [2, 2, 2, 1, 5, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
   [2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
@@ -30,7 +30,7 @@ let OGMap = [
   [2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2],
   [2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2],
   [2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2],
-  [2, 2, 2, 2, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2],
+  [2, 2, 2, 2, 1, 4, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2],
   [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2],
   [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2],
   [2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2],
@@ -54,6 +54,7 @@ let level1FirstTime = true;
 
 //Level 2
 let demonPosition = { x1: 100, y1: 100, x2: 800, y2: 100, x3: 800, y3: 800 };
+let level2FirstTime = true;
 
 //Level 3
 let level3_shoes = [];
@@ -62,6 +63,7 @@ let level3_running = 0;
 let level3_player_speed = 5;
 let timeSinceLastRun = 600;
 let runTimeLeft = 300;
+let level3FirstTime = true;
 
 //Transition 1 -> 2
 let between1and2_Narrations = [];
@@ -214,12 +216,13 @@ function setup() {
 }
 
 function draw() {
+  print(popup_active);
   background(inDreamWorld ? "#AFD589" : "#CBC784");
 
   // Splash Screen
   if (currentScreen === "splash") {
     image(splash_Image, 0, 0, width, height);
-    
+
   }
 
   if (currentScreen === "intro") {
@@ -318,7 +321,7 @@ function draw() {
       switchWorlds();
     }
 
-        //Move to transition screen ------- WRAP IN AN IF STATEMENT
+    //Move to transition screen ------- WRAP IN AN IF STATEMENT
     if (key === "a") {
       currentScreen = "between_1_and_2";
       player = { x: 450, y: 275 };
@@ -348,7 +351,10 @@ function draw() {
   }
 
   if (currentScreen === "level_2") {
-
+    if(level2FirstTime){
+      popup_active = true;
+      popup_num = 5;
+    }
     //BG
     background(inDreamWorld ? "#84B673" : "#AFD589");
 
@@ -464,6 +470,11 @@ function draw() {
   if (currentScreen === "level_3") {
     //BG
     background(inDreamWorld ? "#84B673" : "#AFD589");
+
+    if(level3FirstTime){
+      popup_active = true;
+      popup_num = 7;
+    }
 
     //Draw Maze (Helper function)
     level3_drawMaze();
@@ -602,6 +613,19 @@ function keyPressed() {
     }
   }
 
+  if (currentScreen === "level_2") {
+    if (key === " ") {
+      level2FirstTime = false;
+    }
+  }
+
+  if (currentScreen === "level_3") {
+    if (key === " ") {
+      level3FirstTime = false;
+    }
+  }
+
+
   if (currentScreen === "level_3") {
     if (level3_can_run === 1 && keyCode == SHIFT) {
       level3_running = 1;
@@ -618,6 +642,8 @@ function keyPressed() {
         currentScreen = "level_2";
         startLevel2();
         transitions_narationNumber = 0;
+        popup_active = true;
+        popup_num = 5;
       }
     }
   }
@@ -633,6 +659,8 @@ function keyPressed() {
         startLevel3();
         player = { x: 450, y: 275 };
         transitions_narationNumber = 0;
+        popup_active = true;
+        popup_num = 5;
       }
     }
   }
@@ -646,7 +674,7 @@ function keyPressed() {
     }
   }
 
-  if (popup_active & key === " ") {
+  if (popup_active && key === " " && (currentScreen === "level_1" || currentScreen === "level_2" || currentScreen === "level_3")) {
     popup_active = false;
     if (popup_num === 0 && HUD_health <= 0) {
       if (currentScreen === "level_1") {
@@ -682,7 +710,7 @@ function keyPressed() {
       music_dream_background.stop();
       music_reality_background.stop();
       transitions_narationNumber = 0;
-      
+
     } else if (popup_num === 3) {
       startSwitchingWorlds = true;
       switchWorlds();
@@ -722,6 +750,7 @@ function startLevel1() {
   inDreamWorld = false;
   mazePosition = { x: -710, y: 235 };
   prevMazePosition = { x: -710, y: 235 };
+  player = { x: width / 2, y: height / 2 };
   gameMap = OGMap;
   HUD_health = 3;
   HUD_objectImage = 0;
@@ -735,9 +764,12 @@ function startLevel1() {
 
 function startLevel2() {
   currentScreen = "level_2";
+  popup_active = true;
+  popup_num = 5;
   inDreamWorld = false;
   mazePosition = { x: -710, y: 235 };
   prevMazePosition = { x: -710, y: 235 };
+  player = { x: width / 2, y: height / 2 };
   OGMap = [
     [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
     [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1],
@@ -773,8 +805,6 @@ function startLevel2() {
   gameMap = OGMap;
   HUD_health = 3;
   HUD_objectImage = 0;
-  popup_active = true;
-  popup_num = 5;
   HUD_objectImage = 4;
   music_neighbourhood.stop();
   music_dream_background.stop();
@@ -786,6 +816,7 @@ function startLevel3() {
   inDreamWorld = false;
   mazePosition = { x: -710, y: 235 };
   prevMazePosition = { x: -710, y: 235 };
+  player = { x: width / 2, y: height / 2 };
   OGMap = [
     [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
     [2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1],
@@ -1108,11 +1139,11 @@ function switchWorlds() {
   framesSinceLastSwitch = 0;
   frameToSwitchAt = random(60 * 7, 60 * 12);
 
-  if(inDreamWorld){
+  if (inDreamWorld) {
     music_dream_background.play();
     music_reality_background.stop();
 
-  }else{
+  } else {
     music_reality_background.play();
     music_dream_background.stop();
 
