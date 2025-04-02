@@ -1,4 +1,4 @@
-let currentScreen = "between_2_and_3";
+let currentScreen = "splash";
 //Options: splash, intro, level_1, between_1_and_2, level_2, between_2_and_3, level_3, after_3, death, after_death
 
 //Splash Screen
@@ -229,14 +229,16 @@ function draw() {
     //Draw background
     image(transition_Background, 0, 0, width, height);
 
-    //Draw player
-    image(transition_Player[floor(playerState)], player.x, player.y, 40, 40);
-    transitions_handlePlayerMovement();
-
     //House glow (if applicable)
     if (transitions_narationNumber === 2) {
       image(transition_HouseGlow[0], 0, 0, width, height);
     }
+
+    //Draw player
+    image(transition_Player[floor(playerState)], player.x, player.y, 40, 40);
+    transitions_handlePlayerMovement();
+
+
 
     //Draw foreground
     image(transition_foregrounds[1], 0, 0, width, height);
@@ -351,7 +353,7 @@ function draw() {
   }
 
   if (currentScreen === "level_2") {
-    if(level2FirstTime){
+    if (level2FirstTime) {
       popup_active = true;
       popup_num = 5;
     }
@@ -471,7 +473,7 @@ function draw() {
     //BG
     background(inDreamWorld ? "#84B673" : "#AFD589");
 
-    if(level3FirstTime){
+    if (level3FirstTime) {
       popup_active = true;
       popup_num = 7;
     }
