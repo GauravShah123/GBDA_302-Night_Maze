@@ -5,6 +5,7 @@ html, body {
 
 canvas {
   display: block;
+  border-radius: 12px;
 }
 
 html, body {
