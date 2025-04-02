@@ -304,6 +304,7 @@ function draw() {
       popup_active = true;
       popup_num = 2;
       level1FirstTime = false;  // Set the flag to false after the first time
+      player = { x: width / 2, y: height / 2 - 30 };
     }
 
     //Move to transition screen ------- WRAP IN AN IF STATEMENT
@@ -750,9 +751,9 @@ function transitions_handlePlayerMovement() {
 function startLevel1() {
   currentScreen = "level_1";
   inDreamWorld = false;
-  mazePosition = { x: -710, y: 235 };
-  prevMazePosition = { x: -710, y: 235 };
-  player = { x: width / 2, y: height / 2 };
+  mazePosition = { x: -710, y: 100 };
+  prevMazePosition = { x: -710, y: 100 };
+  player = { x: width / 2, y: height / 2 - 20 };
   gameMap = OGMap;
   HUD_health = 3;
   HUD_objectImage = 0;
@@ -762,6 +763,7 @@ function startLevel1() {
   music_dream_background.stop();
   music_reality_background.play();
   transitions_narationNumber = 0;
+  print(player)
 }
 
 function startLevel2() {
@@ -860,6 +862,7 @@ function startLevel3() {
   music_neighbourhood.stop();
   music_dream_background.stop();
   music_reality_background.play();
+  demonPosition = { x1: 100, y1: 100, x2: 800, y2: 100, x3: 800, y3: 800 };
 }
 
 function level1_drawMaze() {
